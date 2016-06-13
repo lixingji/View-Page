@@ -1,0 +1,65 @@
+<admintpl file="header"/>
+<link href="__PUBLIC__/css/bootstrap.min.css" rel="stylesheet"/>
+</head>
+<body>
+<div>
+    <div style="margin: 20px 150px;" id="app">
+        <h1 align="center">任务审核管理</h1>
+
+        <div>
+            <div style="display: inline;">
+                <input type="radio" style="font-size: 20px;" name="taskType0" @click="queryTaskList('STUDY');currentPage=1"
+                       class="btn label-primary btn-lg studyClass" checked>
+                <label>学习任务</label>
+
+                <input type="radio" style="margin-left:15px; " name="taskType0" @click="queryTaskList('TICKET');currentPage=1"
+                       class="btn label-primary btn-lg ticketClass">
+                <label>晒票任务</label>
+
+                <input type="radio" style="margin-left:15px;" name="taskType0" @click="queryTaskList('TALLY');currentPage=1"
+                       class="btn label-primary btn-lg tallyClass">
+                <label>陈列任务</label>
+            </div>
+        </div>
+        <table class="table table-bordered taskDetail" style="margin-top: 20px;display: none;">
+            <tr class="label-default" style="color: white">
+                <td>时间</td>
+                <td>标题</td>
+                <td>投放类型</td>
+                <td>赏金（积分）</td>
+                <td>投放数量</td>
+                <td>投放费用</td>
+                <td>剩余任务数</td>
+                <td>状态</td>
+                <td colspan="2">操作</td>
+            </tr>
+            <tr v-for="data in datas" class="_class_taskList">
+                <td>{{data.post_time}}</td>
+                <td>{{data.title}}</td>
+                <td>{{data.reward_type==0?"赏金":"积分"}}</td>
+                <td>{{data.reward}}</td>
+                <td>{{data.count}}</td>
+                <td>{{data.cost}}</td>
+                <td>{{data.surplus_count}}</td>
+                <td>{{data.isopen==0?"关闭":(data.isopen==1?"开启":"草稿")}}
+                </td>
+                <td>
+                    <span class="label label-default" @click="operation(1,$index)">{{data.isopen==0?"重新开启":"关闭"}}</span>
+                    <span class="label label-danger" @click="operation(-1,$index)">删除</span>
+                    <span class="label label-warning" @click="operation(2,$index)">审核</span>
+                </td>
+            </tr>
+        </table>
+        <div style="display: none;"><h3>暂无数据</h3></div>
+        <!--<div class="pagination"></div>-->
+        <div class="pagination">
+        </div>
+    </div>
+
+</div>
+<!-- 底部 -->
+<script src="__PUBLIC__/js/utils.js"></script>
+<script src="__PUBLIC__/js/page.js"></script>
+<script src="__ROOT__/admin/themes/simplebootx/Admin/EpCenter/js/managementTask.js"></script>
+</body>
+</html>
